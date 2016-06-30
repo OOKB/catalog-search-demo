@@ -1,0 +1,166 @@
+-
+  id: crseid
+  label: Course ID
+  description: Uniquely identifies a course
+  type: string
+  -
+    id: subjectdescrformal
+    label: 'Subject'
+    description: 'Subject code description'
+    type: string
+  -
+    id: subject
+    label: 'Subject code'
+    description: 'Unique identifier for a subject'
+    type: string
+  -
+    id: catalognbr
+    label: 'Catalog number'
+    description: 'catalog number'
+    type: string
+  -
+    id: ccdescr
+    label: 'Course title'
+    description: 'Course catalog short description'
+    type: string
+  -
+    id: ccdescrlong
+    label: 'Course description'
+    description: 'Course catalog long description'
+    type: string
+-
+  id: classnbr
+  label: Class number
+  description: Unique to a session of a course in a term
+  type: integer
+  -
+    id: classsection
+    label: Class section
+    description:
+  -
+    id: acadcareer
+    label: Academic Career
+    description: Level of program - either undergrad, grad, postbacc or continuing studies
+    type: string
+  -
+    id: strm
+    label: Term Code
+    description: Unique to a specific term, but they correspond to academic career (so potentially has a relationship to acadcareer)
+    type: string
+  -
+    id: term
+    label: 'Term'
+    description: 'Term description'
+    type: string
+  -
+    id: startdt
+    label: 'Class start date'
+    description: 'Date that the class begins'
+    type: dateTime
+    notes: dateTime object returned from db. Only date needed.
+  -
+    id: enddt
+    label: 'Class end date'
+    description: 'Date that the class ends'
+    type: dateTime
+    notes: dateTime object returned from db. Only date needed.
+  -
+    id: meetings
+    label: Class meeting info
+    description: collection of information specific to meetings for a particular class
+    type: object
+    -
+      id: meeting
+      label: meeting
+      description: collection of information specific to a particular meeting of a particular class
+      type: object
+      -
+        id: meetingtimestart
+        label: 'Class start time'
+        description: 'Time that the class begins'
+        type: dateTime
+        notes: dateTime object returned from db. Only time needed.
+      -
+        id: meetingtimeend
+        label: 'Class end time'
+        description: 'Time that the class ends'
+        type: dateTime
+        notes: dateTime object returned from db. Only time needed.
+      -
+        id: meetingdays
+        label: 'Meeting days'
+        description: 'Days of the week that the class meets'
+        type: array
+        -
+          id: mon
+          label: Monday
+          type: boolean
+        -
+          id: tues
+          label: Tuesday
+          type: boolean
+        -
+          id: wed
+          label: Wednesday
+          type: boolean
+        -
+          id: thurs
+          label: Thursday
+          type: boolean
+        -
+          id: fri
+          label: Friday
+          type: boolean
+        -
+          id: sat
+          label: Saturday
+          type: boolean
+        -
+          id: sun
+          label: Sunday
+          type: boolean
+      -
+        id: bldgcd
+        label: 'Building code'
+        description: 'Unique identifier for a building'
+        type: string
+      -
+        id: buildingdescr
+        label: Building
+        description: Building description
+        type: string
+      -
+        id: facilityid
+        label: 'Facility ID'
+        description: 'Unique identifier for a facility/room'
+        type: string
+      -
+        id: facilitydescr
+        label: 'Room'
+        description: 'Facility/Room description'
+        type: string
+      -
+        id: instrfirstname
+        label: Instructor first name
+        description: First name of the Instructor
+        type: string
+      -
+        id: instrlastname
+        label: Instructor last name
+        description: Last name of the Instructor
+        type: string
+  -
+    id: xlatlongname
+    label: Class type
+    description: Type of class eg. lecture, studio, seminar
+    type: string
+  -
+    id: enrlcap
+    label: Total seats
+    description: Number of students that can be enrolled in the class
+    type: number
+  -
+    id: enrltot
+    label: Seats filled
+    description: Number of seats that have been filled
+    type: number
