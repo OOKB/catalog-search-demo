@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Demo Course Catalog Search...</title>
+
+    <script src="https://use.fontawesome.com/b5e9d8f8da.js"></script>
+
+    <link rel="stylesheet" href="https://npmcdn.com/basscss@8.0.1/css/basscss.min.css">
+    <link rel="stylesheet" href="https://npmcdn.com/basscss-btn@1.1.1/css/btn.css">
+    <link rel="stylesheet" href="https://npmcdn.com/basscss-btn-outline@1.1.0/css/btn-outline.css">
+    <link rel="stylesheet" href="https://npmcdn.com/basscss-btn-primary@1.1.0/css/btn-primary.css">
+    <link rel="stylesheet" href="https://npmcdn.com/basscss-btn-sizes@1.2.0/css/btn-sizes.css">
+    <link rel="stylesheet" href="https://npmcdn.com/basscss-background-colors@2.1.0/css/background-colors.css">
+    <link rel="stylesheet" href="https://npmcdn.com/basscss-border-colors@2.1.0/css/border-colors.css">
+    <link rel="stylesheet" href="https://npmcdn.com/basscss-colors@2.2.0/css/colors.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/b5e9d8f8da.css" media="all">
+
+    <style>/* using http://www.basscss.com/ as based CSS framework */
+      * {
+        box-sizing: inherit;
+      }
+      html {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Helvetica, Arial, Sans-serif;
+      }
+      .clear {clear:both;}
+      .search-wrapper {
+        position: relative;
+        font-size: 1.5rem;
+        line-height: 3rem;
+      }
+      .search-wrapper label {
+        position: absolute;
+        left: 1rem;
+        display: inline-block;
+        line-height: 3rem;
+      }
+      .search-wrapper input {
+        padding: .5rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+        border-radius: 1.5rem;
+        height: 3rem;
+        font-size: 1.25rem;
+        line-height: 3rem;
+        display: block;
+        width: 100%;
+        background-color: transparent;
+        background-image: none;
+        border: 1px solid currentColor;
+        outline: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -o-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+        -webkit-transition: all 400ms;
+        transition: all 400ms;
+      }
+      #courseList {
+        border-bottom: 1px solid gray;
+      }
+      #courseList li {
+        border-top: 1px solid gray;
+        padding: 0.75em;
+        font-size: .8rem;
+      }
+      #courseList li:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+      #courseList li h3,
+      #courseList li p,
+      .head p {
+        margin: 0;
+      }
+    </style>
+</head>
+
+<body>
+<div class="wrapper mt4 mb4">
+  <header class="clearfix mb2">
+    <h1 class="center">Course Catalog Search</h1>
+    <p class="col-6 mx-auto center">Type whatever you know — department, course number, random keyword or idea, what you think the name might be... We'll try to filter your results as best we are able.</p>
+  </header>
+
+  <div id="course-search">
+    <div class="search-wrapper col-10 mx-auto">
+      <label><i class="fa fa-search" aria-hidden="true"></i>
+      </label>
+      <input class="search">
+    </div>
+
+    <div class="sort-wrapper center mt1 mb1 filters">
+      <button class="sort btn btn-outline" data-sort="courseCode">Sort by Course Code</button>
+      <button class="sort btn btn-outline" data-sort="courseDepartment">Sort by Department</button>
+      <button class="sort btn btn-outline" data-sort="courseTitle">Sort by Course Name</button>
+      <button class="sort btn btn-outline" data-sort="courseTerm">Sort by Term</button>
+    </div>
+
+    <ul id="courseList" class="list list-reset col-10 m0 mt3 mx-auto">
+      <p>Loading...</p>
+      <script id="individualCourse" type="x-tmpl-mustache">
+        {{#courses}}
+          <li class="clearfix course">
+            <h3 class="courseId hide"> {{crseid}} </h3>
+            <p class="courseCode col col-1"> {{subject}} {{catalognbr}} </p>
+            <p class="courseCode2 hide"> {{subject}}{{catalognbr}} </p>
+            <p class="courseDepartment col col-2"> {{subjectdescrformal}} </p>
+            <p class="courseTitle col col-4"> {{ccdescr}} </p>
+            <p class="courseTerm col col-2"> {{term}} </p>
+            <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
+            <div class="pt1 mb1 extra clear" style="display:none;">
+              <p>When you click on my row, I’ll show up... I would hold extra info in the future</p>
+              <p>When you click on my row, I’ll show up... I would hold extra info in the future</p>
+              <p>When you click on my row, I’ll show up... I would hold extra info in the future</p>
+              <p>When you click on my row, I’ll show up... I would hold extra info in the future</p>
+            </div>
+          </li>
+        {{/courses}}
+      </script>
+    </ul>
+
+  </div>
+
+</div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+
+    <script>
+      $.getJSON('courseSearch.json', function(data) {
+
+        //mustache for projects
+        var template = $('#individualCourse').html();
+        var info = Mustache.to_html(template, data);
+        $('#courseList').html(info);
+
+        $('.course').click(function() {
+          $(this).find('.extra').toggle();
+          $(this).siblings().find('.extra').hide();
+        });
+
+        var options = {
+            valueNames: [
+                'courseId',
+                'courseCode',
+                'courseCode2',
+                'courseDepartment',
+                'courseTitle',
+                'courseTerm',
+                'courseFaculty'
+            ]
+        };
+
+        var userList = new List('course-search', options);
+
+      });
+    </script>
+</body>
+</html>
