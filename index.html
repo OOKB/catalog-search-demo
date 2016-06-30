@@ -64,25 +64,25 @@
       #courseList {
         border-bottom: 1px solid gray;
       }
-      #courseList li {
+      #courseList > li {
         border-top: 1px solid gray;
         padding: 0.75em;
         font-size: .8rem;
       }
-      #courseList li:nth-child(odd) {
+      #courseList > li:nth-child(odd) {
         background-color: rgba(0, 0, 0, .05);
       }
-      #courseList li:hover {
+      #courseList > li:hover {
         background-color: rgba(10, 20, 100, .1);
         cursor: pointer;
       }
-      #courseList li h3,
-      #courseList li p,
+      #courseList > li h3,
+      #courseList > li p,
       .head p {
         margin: 0;
       }
-      #courseList li.active,
-      #courseList li.active:hover {
+      #courseList > li.active,
+      #courseList > li.active:hover {
         background-color: Ivory;
       }
     </style>
@@ -129,14 +129,21 @@
             <p class="courseTerm col col-2"> {{term}} </p>
             <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
             <div class="pt1 mb1 extra clear clearfix" style="display:none;">
-              <div class="courseDescription col col-6">
-                <p> {{ccdescrlong}} </p>
+              <div class="courseDescription col col-7">
+                <p class="pt1"> {{ccdescrlong}} </p>
               </div>
-              <div class="col col-6">
-                <p>When you click on my row, I’ll show up... I would hold extra info in the future</p>
-                <p>When you click on my row, I’ll show up... I would hold extra info in the future</p>
-                <p>When you click on my row, I’ll show up... I would hold extra info in the future</p>
-                <p>When you click on my row, I’ll show up... I would hold extra info in the future</p>
+              <div class="col col-5">
+                <ul class="list-reset p1">
+                  <li class="courseCredits">Credits: {{ccunitsminimum}}</li>
+                  <li>Enrollment: {{enrltot}}/{{enrlcap}}</li>
+                </ul>
+                <ul class="list-reset p1">
+                  <li>{{buildingdescr}}</li>
+                  <li>{{facilitydescr}}</li>
+                </ul>
+                <ul class="list-reset p1">
+                  <li class="acadCareer">{{acadcareer}}</li>
+                </ul>
               </div>
             </div>
           </li>
@@ -176,7 +183,8 @@
                 'courseTitle',
                 'courseTerm',
                 'courseFaculty',
-                'courseDescription'
+                'courseCredits',
+                'acadCareer'
             ]
         };
 
