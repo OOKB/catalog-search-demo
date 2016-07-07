@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MICA Course Catalog</title>
 
     <script src="https://use.fontawesome.com/b5e9d8f8da.js"></script>
@@ -27,7 +28,7 @@
 
     <div id="course-search">
 
-      <div class="search-wrapper m1">
+      <div class="search-wrapper p2 bg-blue">
         <label>
           <i class="fa fa-search" aria-hidden="true"></i>
         </label>
@@ -35,44 +36,72 @@
       </div>
 
       <div class="HolyGrail-body">
-        <main class="HolyGrail-content navy bg-silver">
-          <ul id="courseList" class="list list-reset m0 p0">
-            <p>Loading...</p>
+        <main class="HolyGrail-content black">
+          <ul id="courseList" class="list list-reset m0 p0 border-top border-gray">
+            <p class="p2">Loading...</p>
             <script id="individualCourse" type="x-tmpl-mustache">
               {{#courses}}
-                <li class="clearfix course">
-                  <h3 class="courseId hide"> {{crseid}} </h3>
-                  <p class="courseCode col col-1"> {{subject}} {{catalognbr}} </p>
-                  <p class="courseCode2 hide"> {{subject}}{{catalognbr}} </p>
-                  <p class="courseDepartment col col-2"> {{subjectdescrformal}} </p>
-                  <p class="courseTitle col col-4"> {{ccdescr}} </p>
-                  <p class="courseTerm col col-2"> {{term}} </p>
-                  <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
+                <li id="{{subject}}{{catalognbr}}" class="clearfix course border-bottom border-gray">
+
+                  <!-- basic stuff for courses -->
+                  <p class="courseCode col btn btn-narrow btn-outline"> {{subject}} {{catalognbr}} </p>
+                  <h2 class="courseTitle col col-6"> {{ccdescr}} </h2>
+                  <p class="courseTerm center col col-1"> {{term}} </p>
+                  <p class="courseDays center col col-1"> MTWTF</p>
+                  <p class="courseCredits mono col col-1">Credits: {{ccunitsminimum}}</p>
+                  <p class="acadCareer col col-1 center btn btn-outline {{acadcareer}}">{{acadcareer}}</p>
+
+                  <!-- extra stuff that reveals on click -->
                   <div class="pt1 mb1 extra clear clearfix" style="display:none;">
-                    <div class="courseDescription col col-7">
-                      <p class="pt1"> {{ccdescrlong}} </p>
+                    <div class="courseDescription col col-5">
+                      <p class="lead"> {{ccdescrlong}} </p>
                     </div>
-                    <div class="col col-5">
-                      <ul class="list-reset p1">
-                        <li class="courseCredits">Credits: {{ccunitsminimum}}</li>
-                        <li>Enrollment: {{enrltot}}/{{enrlcap}}</li>
-                      </ul>
-                      <ul class="list-reset p1">
-                        <li>{{buildingdescr}}</li>
-                        <li>{{facilitydescr}}</li>
-                      </ul>
-                      <ul class="list-reset p1">
-                        <li class="acadCareer">{{acadcareer}}</li>
+                    <div class="col col-7">
+                      <ul class="courseSections list-reset ml2 border-top border-gray">
+                        <li class="section clearfix border-bottom border-gray p1">
+                          <p class="col col-2">{{subject}}{{catalognbr}}{{classsection}}</p>
+                          <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
+                          <p class="col col-2">DAY/TIME</p>
+                          <p class="col col-4">{{facilitydescr}}</p>
+                          <p class="enrollment col col-1 right-align"> {{enrltot}}/{{enrlcap}} <i class="fa fa-circle green" aria-hidden="true"></i></p>
+                        </li>
+                        <li class="section clearfix border-bottom border-gray p1">
+                          <p class="col col-2">{{subject}}{{catalognbr}}{{classsection}}</p>
+                          <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
+                          <p class="col col-2">DAY/TIME</p>
+                          <p class="col col-4">{{facilitydescr}}</p>
+                          <p class="enrollment col col-1 right-align"> {{enrltot}}/{{enrlcap}} <i class="fa fa-circle green" aria-hidden="true"></i></p>
+                        </li>
+                        <li class="section clearfix border-bottom border-gray p1">
+                          <p class="col col-2">{{subject}}{{catalognbr}}{{classsection}}</p>
+                          <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
+                          <p class="col col-2">DAY/TIME</p>
+                          <p class="col col-4">{{facilitydescr}}</p>
+                          <p class="enrollment col col-1 right-align"> {{enrltot}}/{{enrlcap}} <i class="fa fa-circle green" aria-hidden="true"></i></p>
+                        </li>
+                        <li class="section clearfix border-bottom border-gray p1 full gray">
+                          <p class="col col-2">{{subject}}{{catalognbr}}{{classsection}}</p>
+                          <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
+                          <p class="col col-2">DAY/TIME</p>
+                          <p class="col col-4">{{facilitydescr}}</p>
+                          <p class="enrollment col col-1 right-align"> {{enrlcap}}/{{enrlcap}} <i class="fa fa-square red" aria-hidden="true"></i></p>
+                        </li>
                       </ul>
                     </div>
                   </div>
+
+                  <!-- hide these from view, but use for search -->
+                  <p class="courseId hide"> {{crseid}} </p>
+                  <p class="courseCode2 hide"> {{subject}}{{catalognbr}} </p>
+                  <p class="courseDepartment hide"> {{subjectdescrformal}} </p>
+
                 </li>
               {{/courses}}
             </script>
           </ul>
         </main>
 
-        <aside class="HolyGrail-filters p1 silver bg-navy">
+        <aside class="HolyGrail-filters p1 bg-gray">
           <div class="sort-wrapper center filters">
             <p>
               This is where filtering will happen.
@@ -86,7 +115,10 @@
               Actual filters? Only show a specific term? show open/closed? show specific days of the week?
             </p>
             <p>
-              <a href="https://portal.cca.edu/courses/?term=2016FA&subject=GRAPH&campus=&acad_level=&q=TBD">CCA course search as an example...</a>
+              <a href="https://portal.cca.edu/courses/">CCA course search as an example...</a>
+            </p>
+            <p>
+              <a href="https://webapp4.asu.edu/catalog/">ASU course catalog as another example</a>
             </p>
           </div>
         </aside>
