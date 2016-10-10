@@ -42,59 +42,44 @@
             <p class="p2">Loading...</p>
             <script id="individualCourse" type="x-tmpl-mustache">
               {{#courses}}
-                <li id="{{subject}}{{catalognbr}}" class="clearfix course border-bottom border-gray">
+                <li id="{{subject}}{{catalogNbr}}" class="clearfix course border-bottom border-gray">
 
                   <!-- basic stuff for courses -->
-                  <p class="courseCode col btn btn-narrow btn-outline"> {{subject}} {{catalognbr}} </p>
-                  <h2 class="courseTitle col col-6"> {{ccdescr}} </h2>
+                  <p class="courseCode col btn btn-narrow btn-outline"> {{subject}} {{catalogNbr}} </p>
+                  <h2 class="courseTitle col col-6"> {{ccDescr}} </h2>
                   <p class="courseTerm center col col-1"> {{term}} </p>
                   <p class="courseDays center col col-1"> MTWTF</p>
-                  <p class="courseCredits mono col col-1">Credits: {{ccunitsminimum}}</p>
-                  <p class="acadCareer col col-1 center btn btn-outline {{acadcareer}}">{{acadcareer}}</p>
+                  <p class="courseCredits mono col col-1">Credits: {{unitsMin}}</p>
 
                   <!-- extra stuff that reveals on click -->
                   <div class="pt1 mb1 extra clear clearfix" style="display:none;">
                     <div class="courseDescription col col-5">
-                      <p class="lead"> {{ccdescrlong}} </p>
+                      <p class="lead"> {{ccDescrLong}} </p>
                     </div>
                     <div class="col col-7">
                       <ul class="courseSections list-reset ml2 border-top border-gray">
-                        <li class="section clearfix border-bottom border-gray p1">
-                          <p class="col col-2">{{subject}}{{catalognbr}}{{classsection}}</p>
-                          <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
-                          <p class="col col-2">DAY/TIME</p>
-                          <p class="col col-4">{{facilitydescr}}</p>
-                          <p class="enrollment col col-1 right-align"> {{enrltot}}/{{enrlcap}} <i class="fa fa-circle green" aria-hidden="true"></i></p>
-                        </li>
-                        <li class="section clearfix border-bottom border-gray p1">
-                          <p class="col col-2">{{subject}}{{catalognbr}}{{classsection}}</p>
-                          <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
-                          <p class="col col-2">DAY/TIME</p>
-                          <p class="col col-4">{{facilitydescr}}</p>
-                          <p class="enrollment col col-1 right-align"> {{enrltot}}/{{enrlcap}} <i class="fa fa-circle green" aria-hidden="true"></i></p>
-                        </li>
-                        <li class="section clearfix border-bottom border-gray p1">
-                          <p class="col col-2">{{subject}}{{catalognbr}}{{classsection}}</p>
-                          <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
-                          <p class="col col-2">DAY/TIME</p>
-                          <p class="col col-4">{{facilitydescr}}</p>
-                          <p class="enrollment col col-1 right-align"> {{enrltot}}/{{enrlcap}} <i class="fa fa-circle green" aria-hidden="true"></i></p>
-                        </li>
-                        <li class="section clearfix border-bottom border-gray p1 full gray">
-                          <p class="col col-2">{{subject}}{{catalognbr}}{{classsection}}</p>
-                          <p class="courseFaculty col col-3"> {{instrfirstname}} {{instrlastname}}</p>
-                          <p class="col col-2">DAY/TIME</p>
-                          <p class="col col-4">{{facilitydescr}}</p>
-                          <p class="enrollment col col-1 right-align"> {{enrlcap}}/{{enrlcap}} <i class="fa fa-square red" aria-hidden="true"></i></p>
-                        </li>
+                        {{#classes}}
+                          <li class="section clearfix border-bottom border-gray p1 {{classNbr}}">
+                            <p class="col col-2">{{subject}}{{catalogNbr}}{{classSection}}</p>
+                            {{#meetings}}
+                              <p class="courseFaculty col col-3">
+                                {{instrFirstName}} {{instrLastName}}
+                              </p>
+                              {{#meetingDays}}
+                                <p class="col col-2">{{.}}</p>
+                              {{/meetingDays}}
+                              <p class="col col-4">{{facilityShortDescr}}</p>
+                            {{/meetings}}
+                            <p class="enrollment col col-1 right-align"> {{enrlTot}}/{{enrlCap}} <i class="fa fa-circle green" aria-hidden="true"></i></p>
+                          </li>
+                        {{/classes}}
                       </ul>
                     </div>
                   </div>
 
-                  <!-- hide these from view, but use for search -->
                   <p class="courseId hide"> {{crseid}} </p>
-                  <p class="courseCode2 hide"> {{subject}}{{catalognbr}} </p>
-                  <p class="courseDepartment hide"> {{subjectdescrformal}} </p>
+                  <p class="major hide"> {{subjectDescr}} </p>
+                  <p class="courseCode2 hide"> {{subject}}{{catalogNbr}} </p>
 
                 </li>
               {{/courses}}
@@ -147,7 +132,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
 
   <script>
-    $.getJSON('courseSearch.json', function(data) {
+    $.getJSON('https://mica-course-search.herokuapp.com/courses', function(data) {
 
       //mustache for projects
       var template = $('#individualCourse').html();
@@ -164,7 +149,8 @@
       var options = {
         valueNames: [
           'courseId',
-          'courseCode',
+          'courseId',
+          'major',
           'courseCode2',
           'courseDepartment',
           'courseTitle',
